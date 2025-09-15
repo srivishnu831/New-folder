@@ -1,0 +1,7 @@
+class FinalStaticDemo {
+    final static int MAX_VALUE = 100;
+
+    public static void main(String[] args) {
+        System.out.println("The value of MAX_VALUE is: " + MAX_VALUE);
+    }
+}
