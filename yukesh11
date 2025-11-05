@@ -1,0 +1,53 @@
+// File: ThemeSwitcher.java
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+public class ThemeSwitcher extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Labels and Inputs
+        Label lblTitle = new Label("Dynamic Theme Form");
+        Label lblName = new Label("Name:");
+        TextField txtName = new TextField();
+        Label lblEmail = new Label("Email:");
+        TextField txtEmail = new TextField();
+        Button btnSubmit = new Button("Submit");
+
+        // ComboBox to switch themes
+        ComboBox<String> themeBox = new ComboBox<>();
+        themeBox.getItems().addAll("Light Theme", "Dark Theme");
+        themeBox.setValue("Light Theme");
+
+        // Layout setup
+        VBox root = new VBox(10);
+        root.setStyle("-fx-padding: 20;");
+        root.getChildren().addAll(lblTitle, lblName, txtName, lblEmail, txtEmail, btnSubmit, themeBox);
+
+        Scene scene = new Scene(root, 400, 300);
+
+        // Default CSS (Light Theme)
+        scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
+
+        // Theme change action
+        themeBox.setOnAction(e -> {
+            scene.getStylesheets().clear();
+            if (themeBox.getValue().equals("Dark Theme")) {
+                scene.getStylesheets().add(getClass().getResource("dark-theme.css").toExternalForm());
+            } else {
+                scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
+            }
+        });
+
+        primaryStage.setTitle("Dynamic Theme Switcher");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
