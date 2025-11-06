@@ -1,0 +1,41 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class LookFeelDemo {
+    JFrame f;
+    JComboBox<String> combo;
+
+    public LookFeelDemo() {
+        f = new JFrame("Look & Feel Switcher");
+        combo = new JComboBox<>(new String[]{"Metal", "Nimbus", "Motif"});
+        JButton btn = new JButton("Click Me");
+        JLabel lbl = new JLabel("Hello Swing!");
+
+        combo.addActionListener(e -> changeLook());
+
+        f.setLayout(new FlowLayout());
+        f.add(combo); f.add(btn); f.add(lbl);
+        f.setSize(300,150);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+
+    void changeLook() {
+        try {
+            String sel = (String) combo.getSelectedItem();
+            switch (sel) {
+                case "Nimbus" -> UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                case "Motif" -> UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+                default -> UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            }
+            SwingUtilities.updateComponentTreeUI(f);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        new LookFeelDemo();
+    }
+}
